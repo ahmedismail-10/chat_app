@@ -1,5 +1,6 @@
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/services/home_service.dart';
+import 'package:chat_app/ui/chat_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,13 @@ class HomeView extends StatelessWidget {
                     vertical: 4,
                   ),
                   child: ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ChatView(receiver: user),
+                        ),
+                      );
+                    },
                     leading: CircleAvatar(
                       child: Text(user.email.split('@')[0][0].toUpperCase()),
                     ),
