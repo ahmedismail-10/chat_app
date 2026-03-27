@@ -1,4 +1,5 @@
-import 'package:chat_app/constants.dart';
+import 'package:chat_app/helper/constants.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/ui/signup_view.dart';
 import 'package:chat_app/ui/widgets/custom_button.dart';
 import 'package:chat_app/ui/widgets/custom_text_form_field.dart';
@@ -47,8 +48,10 @@ class _LoginViewState extends State<LoginView> {
                         controller: emailController,
                         labelText: "Email Address",
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null || value.isEmpty) {
                             return "Enter your email";
+                          } else if (!value.contains('@')) {
+                            return "Enter a valid email";
                           }
                           return null;
                         },
@@ -81,6 +84,11 @@ class _LoginViewState extends State<LoginView> {
                             return;
                           }
                           _formKey.currentState?.save();
+                          AuthService.signIn(
+                            context,
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
                         },
                       ),
 

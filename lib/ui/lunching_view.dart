@@ -1,3 +1,4 @@
+import 'package:chat_app/ui/home_view.dart';
 import 'package:chat_app/ui/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class LunchingView extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return const SizedBox();
+          return HomeView(user: snapshot.data!);
         } else {
           return const LoginView();
         }

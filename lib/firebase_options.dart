@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'chat-app-depi-d1300',
     storageBucket: 'chat-app-depi-d1300.firebasestorage.app',
   );
+
 }

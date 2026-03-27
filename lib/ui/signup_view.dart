@@ -1,4 +1,5 @@
-import 'package:chat_app/constants.dart';
+import 'package:chat_app/helper/constants.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/ui/widgets/custom_button.dart';
 import 'package:chat_app/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -47,8 +48,10 @@ class _SignupViewState extends State<SignupView> {
                         controller: emailController,
                         labelText: "Email Address",
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null || value.isEmpty) {
                             return "Enter your email";
+                          } else if (!value.contains('@')) {
+                            return "Enter a valid email";
                           }
                           return null;
                         },
@@ -77,7 +80,9 @@ class _SignupViewState extends State<SignupView> {
                         labelText: "Confirm Password",
                         isPassword: true,
                         validator: (value) {
-                          if (value != passwordController.text) {
+                          if (value!.length < 6) {
+                            return "Password must be at least 6 chars";
+                          } else if (value != passwordController.text) {
                             return "Passwords do not match";
                           }
                           return null;
@@ -96,6 +101,11 @@ class _SignupViewState extends State<SignupView> {
                             return;
                           }
                           _formKey.currentState?.save();
+                          AuthService.signUp(
+                            context,
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
                         },
                       ),
 
